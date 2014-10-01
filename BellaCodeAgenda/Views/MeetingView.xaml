@@ -1,0 +1,73 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                    mc:Ignorable="d"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+                    xmlns:bellacode="http://schemas.bellacode.com/xaml"                    
+                    xmlns:agenda="clr-namespace:BellaCodeAgenda"
+                    xmlns:agenda_view_models="clr-namespace:BellaCodeAgenda.ViewModels">
+
+
+    <Style x:Key="Meeting.View" TargetType="{x:Type Control}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <bellacode:ViewModelScope ViewModelType="{x:Type agenda_view_models:MeetingViewModel}">
+                        <Grid d:DesignWidth="576" d:DesignHeight="462" Margin="10">
+                            <i:Interaction.Behaviors>
+                                <bellacode:BindCommandBehavior Command="{x:Static agenda:MainCommands.StartMeeting}"/>
+                            </i:Interaction.Behaviors>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                            	<Grid.RowDefinitions>
+                            		<RowDefinition Height="Auto"/>
+                            		<RowDefinition Height="Auto"/>
+                            	</Grid.RowDefinitions>
+                        		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Start Time" FontFamily="Segoe UI Light" FontSize="18.667" Foreground="#FF404040"/>                                
+                        		<TextBox TextWrapping="Wrap" Text="{Binding Meeting.StartTime, Mode=TwoWay}" MinWidth="100" VerticalContentAlignment="Center" Height="Auto" Grid.Row="1" Margin="5,5,0,0"/>
+                        	</Grid>
+                        	<Grid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Margin="0,5,0,0">
+                        		<Grid.RowDefinitions>
+                        			<RowDefinition Height="Auto"/>
+                        			<RowDefinition Height="Auto"/>
+                        		</Grid.RowDefinitions>
+                        		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Expected Duration" FontFamily="Segoe UI Light" FontSize="18.667" Foreground="#FF404040"/>
+                        		<WrapPanel Orientation="Horizontal" Grid.Row="1" Margin="5,5,0,0">
+                                    <TextBox TextWrapping="Wrap" Text="{Binding Meeting.ExpectedDuration, Mode=TwoWay}" MinWidth="100" VerticalContentAlignment="Center" Height="25" Margin="0" Width="100"/>
+                        			<TextBlock TextWrapping="Wrap" Text="minutes" Margin="2,0,0,0" VerticalAlignment="Bottom"/>
+                        		</WrapPanel>
+                        	</Grid>
+                        	<Grid Grid.Row="2" Margin="0,5,0,0">
+                        		<Grid.RowDefinitions>
+                        			<RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                        			<RowDefinition/>
+                        		</Grid.RowDefinitions>
+                        		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Agenda" FontFamily="Segoe UI Light" FontSize="18.667" Foreground="#FF404040"/>
+                                <StackPanel Grid.Row="1"  Margin="5,0">
+                                    <TextBlock Text="Enter each agenda item on a seperate line. Start each agenda item with the name, followed by the number of minutes planned for that item. Agenda items without minutes will evenly divide meeting time. Here is an example." TextWrapping="Wrap" Foreground="#FF404040"/>
+                                    <TextBlock Text="Open Discussion 15" TextWrapping="Wrap" FontStyle="Italic" Foreground="#FF404040"/>
+                                </StackPanel>
+                                <TextBox TextWrapping="Wrap" Text="{Binding AgendaText, Mode=TwoWay}" AcceptsReturn="True" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="2" Margin="5,5,5,5" MinHeight="200"/>
+                        	</Grid>
+                        	<Grid Grid.Row="3">
+                        		<Grid.ColumnDefinitions>
+                        			<ColumnDefinition/>
+                        			<ColumnDefinition Width="Auto"/>
+                        		</Grid.ColumnDefinitions>
+                                <Button Content="Start Meeting" Command="{x:Static agenda:MainCommands.StartMeeting}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="5" MinWidth="100"/>
+                        	</Grid>
+                        </Grid>
+                    </bellacode:ViewModelScope>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

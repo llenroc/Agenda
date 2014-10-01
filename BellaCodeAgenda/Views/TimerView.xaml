@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                    mc:Ignorable="d"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+                    xmlns:bellacode="http://schemas.bellacode.com/xaml"                    
+                    xmlns:agenda="clr-namespace:BellaCodeAgenda"
+                    xmlns:agenda_view_models="clr-namespace:BellaCodeAgenda.ViewModels">
+
+
+    <Style x:Key="Timer.View" TargetType="{x:Type Control}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <bellacode:ViewModelScope ViewModelType="{x:Type agenda_view_models:TimerViewModel}">
+                        <StackPanel>
+                            <ProgressBar Value="{Binding PercentMeetingTimeUsed}" Style="{DynamicResource Agenda.ProgressBar}" MinWidth="100" Height="20" />                            
+                            <ItemsControl ItemsSource="{Binding ActiveAgendaItems}" Margin="10">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+										<Border TextBlock.Foreground="#FFE5E5E5" Padding="4">
+											<Border.Background>
+												<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        											<GradientStop Color="Black" Offset="1"/>
+        											<GradientStop Color="#FF404040" Offset="0"/>
+        										</LinearGradientBrush>
+											</Border.Background>
+											<WrapPanel>			
+                                                <CheckBox IsChecked="{Binding IsComplete, Mode=TwoWay}" Style="{DynamicResource Agenda.CheckBox}" />
+												<TextBlock Text="{Binding Duration, Mode=OneWay}" />
+												<TextBlock Text="{Binding Name, Mode=OneWay}" />
+											</WrapPanel>
+										</Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </bellacode:ViewModelScope>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
