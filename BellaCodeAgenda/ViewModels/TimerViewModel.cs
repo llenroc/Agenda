@@ -15,21 +15,15 @@ namespace BellaCodeAgenda.ViewModels
     {
         private DispatcherTimer _timer = new DispatcherTimer();
 
-        private CollectionViewSource _activeAgendaItemsViewSource = new CollectionViewSource();
+        private CollectionViewSource _pastAgendaItemsViewSource = new CollectionViewSource();
 
         public TimerViewModel()
         {
             this._timer.Interval = TimeSpan.FromSeconds(1);
             this._timer.Tick += Timer_Tick;
 
-            this._activeAgendaItemsViewSource.Filter += _activeAgendaItemsViewSource_Filter;
-        }
-
-        void _activeAgendaItemsViewSource_Filter(object sender, FilterEventArgs e)
-        {
-            var agendaItem = e.Item as AgendaItem;
-            e.Accepted = (agendaItem != null && !agendaItem.IsComplete);
-        }
+            this._pastAgendaItemsViewSource.Filter += _pastAgendaItemsViewSource_Filter;
+        }        
 
         public Meeting Meeting
         {
@@ -57,37 +51,60 @@ namespace BellaCodeAgenda.ViewModels
             }
         }
 
-        private ICollectionView _activeAgendaItems;
+        private AgendaItem _currentAgendaItem;
 
-        public ICollectionView ActiveAgendaItems
+        public AgendaItem CurrentAgendaItem
         {
             get
             {
-                return this._activeAgendaItems;
+                return this._currentAgendaItem;
             }
             private set
             {
-                if (this._activeAgendaItems != value)
+                if (this._currentAgendaItem != value)
                 {
-                    this._activeAgendaItems = value;
+                    this._currentAgendaItem = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        private ICollectionView _pastAgendItemsView;
+
+        public ICollectionView PastAgendaItems
+        {
+            get
+            {
+                return this._pastAgendItemsView;
+            }
+            private set
+            {
+                if (this._pastAgendItemsView != value)
+                {
+                    this._pastAgendItemsView = value;
                     RaisePropertyChanged();
                 }
             }
         }
 
-        private void SetActiveAgendaItemsViewSource()
+        private void SetPastAgendaItemsViewSource()
         {
             if (this.Meeting != null)
             {
-                this._activeAgendaItemsViewSource.Source = this.Meeting.AgendaItems;
-                this.ActiveAgendaItems = this._activeAgendaItemsViewSource.View;
+                this._pastAgendaItemsViewSource.Source = this.Meeting.AgendaItems;
+                this.PastAgendaItems = this._pastAgendaItemsViewSource.View;
             }
             else
             {
-                this._activeAgendaItemsViewSource.Source = null;
-                this.ActiveAgendaItems = null;
+                this._pastAgendaItemsViewSource.Source = null;
+                this.PastAgendaItems = null;
             }
+        }
 
+        private void _pastAgendaItemsViewSource_Filter(object sender, FilterEventArgs e)
+        {
+            var agendaItem = e.Item as AgendaItem;
+            e.Accepted = (agendaItem != null && !agendaItem.IsComplete && agendaItem.IsPast);
         }
 
         protected override void OnModelChanged(Meeting oldValue, Meeting newValue)
@@ -102,7 +119,7 @@ namespace BellaCodeAgenda.ViewModels
                 }
             }
 
-            this.SetActiveAgendaItemsViewSource();
+            this.SetPastAgendaItemsViewSource();
 
             if (newValue != null)
             {
@@ -115,9 +132,10 @@ namespace BellaCodeAgenda.ViewModels
 
         private void agendaItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (this.ActiveAgendaItems != null && e.PropertyName == "IsComplete")
+            if (this.PastAgendaItems != null)
             {
-                this.ActiveAgendaItems.Refresh();
+                if  (e.PropertyName == "IsComplete" || e.PropertyName == "IsPast")
+                this.PastAgendaItems.Refresh();
             }
         }
 
@@ -127,17 +145,17 @@ namespace BellaCodeAgenda.ViewModels
 
             if (newValue != null)
             {
-                this.UpdatePercentMeetingTimeUsed();
+                this.UpdateProperties();
                 this._timer.Start();
             }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            this.UpdatePercentMeetingTimeUsed();
+            this.UpdateProperties();
         }
 
-        private void UpdatePercentMeetingTimeUsed()
+        private void UpdateProperties()
         {
             if (this.Meeting != null)
             {
@@ -146,6 +164,34 @@ namespace BellaCodeAgenda.ViewModels
                 {
                     this.PercentMeetingTimeUsed = Math.Min(100, ((elapsedTime.TotalSeconds / this.Meeting.ExpectedDuration.TotalSeconds) * 100.0));
                 }
+
+                var candidateCurrentAgendaItem = (AgendaItem)null;
+                if (this.Meeting.AgendaItems != null)
+                {
+                    var itemStart = TimeSpan.Zero;
+                    var itemEnd = TimeSpan.Zero;
+                    foreach (var agendaItem in this.Meeting.AgendaItems)
+                    {
+                        itemEnd = itemStart + agendaItem.Duration;
+
+                        // I look for the first non-complete agenda item
+                        // that is within the start/end timeframe for the item.
+                        if (!agendaItem.IsComplete)
+                        {
+                            if (candidateCurrentAgendaItem == null && elapsedTime <= itemEnd)
+                            {
+                                candidateCurrentAgendaItem = agendaItem;
+                            }                            
+                        }
+
+                        // I update the IsPast for every agenda item
+                        agendaItem.IsPast = elapsedTime > itemEnd;                        
+
+                        itemStart += agendaItem.Duration;
+                    }                    
+                }
+
+                this.CurrentAgendaItem = candidateCurrentAgendaItem;
             }
         }
     }

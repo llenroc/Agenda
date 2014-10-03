@@ -14,7 +14,7 @@ namespace BellaCodeAgenda.Models
             this.AgendaItems = new Collection<AgendaItem>();
         }
 
-        private TimeSpan _startTime = DateTime.Now.TimeOfDay;
+        private TimeSpan _startTime = TimeSpan.FromMinutes(Math.Floor(DateTime.Now.TimeOfDay.TotalMinutes));
 
         /// <summary>
         /// The start time on the day the meeting occurs represented as a duration since midnight.

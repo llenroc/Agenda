@@ -6,9 +6,13 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
                     xmlns:bellacode="http://schemas.bellacode.com/xaml"                    
                     xmlns:agenda="clr-namespace:BellaCodeAgenda"
+                    xmlns:agenda_converters="clr-namespace:BellaCodeAgenda.Converters"
                     xmlns:agenda_view_models="clr-namespace:BellaCodeAgenda.ViewModels">
 
-
+    <bellacode:ObjectRefVisibilityConverter x:Key="CollapsedWhenNullConverter" WhenNotNull="Visible" WhenNull="Collapsed" />
+    <agenda_converters:TimeSpanMinutesConverter x:Key="TimeSpanMinutesConverter"  />
+    
+    
     <Style x:Key="Timer.View" TargetType="{x:Type Control}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
@@ -27,15 +31,47 @@
         											<GradientStop Color="#FF404040" Offset="0"/>
         										</LinearGradientBrush>
 											</Border.Background>
-											<WrapPanel>			
-                                                <CheckBox IsChecked="{Binding IsComplete, Mode=TwoWay}" Style="{DynamicResource Agenda.CheckBox}" />
-												<TextBlock Text="{Binding Duration, Mode=OneWay}" />
-												<TextBlock Text="{Binding Name, Mode=OneWay}" />
-											</WrapPanel>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <CheckBox IsChecked="{Binding IsComplete, Mode=TwoWay}" Style="{DynamicResource Agenda.CheckBox}" Grid.Column="0"/>
+                                                <TextBlock Text="{Binding Name, Mode=OneWay}" Grid.Column="1"/>
+                                                <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                                    <TextBlock Text="{Binding Duration, Mode=OneWay, Converter={StaticResource TimeSpanMinutesConverter}}" />
+                                                    <TextBlock Text=" mins" />
+                                                </StackPanel>
+
+                                            </Grid>                                           
 										</Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
+                            <!-- This is the current item -->
+                            <Border TextBlock.Foreground="#FFE5E5E5" Padding="4" Visibility="{Binding CurrentAgendaItem, Mode=OneWay, Converter={StaticResource CollapsedWhenNullConverter}}">
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="Blue" Offset="1"/>
+                                        <GradientStop Color="Black" Offset="0"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox IsChecked="{Binding CurrentAgendaItem.IsComplete, Mode=TwoWay}" Style="{DynamicResource Agenda.CheckBox}" Grid.Column="0"/>
+                                    <TextBlock Text="{Binding CurrentAgendaItem.Name, Mode=OneWay}" Grid.Column="1"/>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                        <TextBlock Text="{Binding CurrentAgendaItem.Duration, Mode=OneWay, Converter={StaticResource TimeSpanMinutesConverter}}" />
+                                        <TextBlock Text=" mins" />
+                                    </StackPanel>
+                                    
+                                </Grid>
+                            </Border>
                         </StackPanel>
                     </bellacode:ViewModelScope>
                 </ControlTemplate>

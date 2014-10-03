@@ -6,7 +6,10 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
                     xmlns:bellacode="http://schemas.bellacode.com/xaml"                    
                     xmlns:agenda="clr-namespace:BellaCodeAgenda"
+                    xmlns:agenda_converters="clr-namespace:BellaCodeAgenda.Converters"
                     xmlns:agenda_view_models="clr-namespace:BellaCodeAgenda.ViewModels">
+
+    <agenda_converters:TimeSpanMinutesConverter x:Key="TimeSpanMinutesConverter"  />
 
 
     <Style x:Key="Meeting.View" TargetType="{x:Type Control}">
@@ -40,7 +43,7 @@
                         		</Grid.RowDefinitions>
                         		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Expected Duration" FontFamily="Segoe UI Light" FontSize="18.667" Foreground="#FF404040"/>
                         		<WrapPanel Orientation="Horizontal" Grid.Row="1" Margin="5,5,0,0">
-                                    <TextBox TextWrapping="Wrap" Text="{Binding Meeting.ExpectedDuration, Mode=TwoWay}" MinWidth="100" VerticalContentAlignment="Center" Height="25" Margin="0" Width="100"/>
+                                    <TextBox TextWrapping="Wrap" Text="{Binding Meeting.ExpectedDuration, Mode=TwoWay, Converter={StaticResource TimeSpanMinutesConverter}}" MinWidth="100" VerticalContentAlignment="Center" Height="25" Margin="0" Width="100"/>
                         			<TextBlock TextWrapping="Wrap" Text="minutes" Margin="2,0,0,0" VerticalAlignment="Bottom"/>
                         		</WrapPanel>
                         	</Grid>

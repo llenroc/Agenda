@@ -82,7 +82,8 @@ namespace BellaCodeAgenda.ViewModels
             {
                 var allocatedMinutes = this.Meeting.AgendaItems.Sum(x => x.Duration.TotalMinutes);
                 var leftOverMinutes = Math.Max(0, this.Meeting.ExpectedDuration.TotalMinutes - allocatedMinutes);
-                var leftOverMinutesPerItem = (int)Math.Floor(leftOverMinutes / (double)noDurationAgendaItems.Count());
+                //var leftOverMinutesPerItem = (int)Math.Floor(leftOverMinutes / (double)noDurationAgendaItems.Count());
+                var leftOverMinutesPerItem = leftOverMinutes / (double)noDurationAgendaItems.Count();
 
                 foreach (var noDurationAgendaItem in noDurationAgendaItems)
                 {
