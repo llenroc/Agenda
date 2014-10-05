@@ -65,6 +65,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindableBase.cs" />
+    <Compile Include="Converters\TimeSpanHoursMinutesConverter.cs" />
+    <Compile Include="Converters\TimeSpanTimeOfDayConverter.cs" />
     <Compile Include="Converters\TimeSpanMinutesConverter.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\AgendaItem.cs" />

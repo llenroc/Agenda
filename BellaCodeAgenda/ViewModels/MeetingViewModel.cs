@@ -174,5 +174,18 @@ namespace BellaCodeAgenda.ViewModels
             window.DataContext = this.Meeting;
             window.Show();
         }
+
+        public bool CanSetMeetingStartToNow
+        {
+            get
+            {
+                return this.Meeting != null;
+            }
+        }
+
+        public void SetMeetingStartToNow()
+        {
+            this.Meeting.StartTime = TimeSpan.FromMinutes(Math.Floor(DateTime.Now.TimeOfDay.TotalMinutes));
+        }
     }
 }
