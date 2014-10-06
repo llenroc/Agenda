@@ -1,6 +1,6 @@
 ﻿<Window x:Class="BellaCodeAgenda.TimerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Agenda" Height="300" Width="300">
+        Title="Agenda" Width="300" SizeToContent="Height" WindowStartupLocation="CenterOwner" Topmost="True" WindowStyle="None" ResizeMode="CanResize" AllowsTransparency="True" Background="#00FFFFFF" Focusable="False"  >
     <Control Style="{DynamicResource Timer.View}" />
 </Window>

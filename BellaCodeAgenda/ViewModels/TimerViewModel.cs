@@ -3,6 +3,7 @@ using BellaCodeAgenda.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -105,6 +106,25 @@ namespace BellaCodeAgenda.ViewModels
         {
             var agendaItem = e.Item as AgendaItem;
             e.Accepted = (agendaItem != null && !agendaItem.IsComplete && agendaItem.IsPast);
+        }
+
+        private bool _isInteractive;
+
+        public bool IsInteractive
+        {
+            get
+            {
+                return this._isInteractive;
+            }
+            private set
+            {
+                if (this._isInteractive != value)
+                {
+                    Debug.WriteLine("Interactive:" + value);
+                    this._isInteractive = value;
+                    this.RaisePropertyChanged();
+                }
+            }
         }
 
         protected override void OnModelChanged(Meeting oldValue, Meeting newValue)

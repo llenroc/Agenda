@@ -5,10 +5,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Agenda.CloseButton.xaml"/>
+                <ResourceDictionary Source="Styles/Agenda.CheckBox.xaml"/>
+                <ResourceDictionary Source="Styles/Agenda.ProgressBar.xaml"/>
+                <ResourceDictionary Source="Styles/Agenda.TitleBar.xaml"/>
                 <ResourceDictionary Source="Views/MeetingView.xaml"/>
                 <ResourceDictionary Source="Views/TimerView.xaml"/>
-                <ResourceDictionary Source="Styles/Agenda.ProgressBar.xaml"/>
-                <ResourceDictionary Source="Styles/Agenda.CheckBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

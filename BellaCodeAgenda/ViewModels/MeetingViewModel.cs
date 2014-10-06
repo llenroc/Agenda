@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BellaCodeAgenda.ViewModels
 {
@@ -25,7 +26,7 @@ namespace BellaCodeAgenda.ViewModels
             }
         }
 
-        private string _agendaText;
+        private string _agendaText = "One\r\nTwo\r\nThree\r\nFour\r\nFive\r\nSix\r\nSeven\r\nEight\r\nNine\r\nTen";
 
         /// <summary>
         /// The agenda the meeting represented by a series of items (one per line).
@@ -170,8 +171,47 @@ namespace BellaCodeAgenda.ViewModels
         {
             this.UpdateMeetingAgendaItems();
 
-            TimerWindow window = new TimerWindow();
-            window.DataContext = this.Meeting;
+            var window = Window.GetWindow(this.View as DependencyObject);
+
+            // TODO: Move into ShowTimerWindowAction
+            TimerWindow timerWindow = new TimerWindow();
+            timerWindow.Owner = window;
+            timerWindow.DataContext = this.Meeting;
+
+            timerWindow.Closing += TimerWindow_Closing;
+            timerWindow.Closed += TimerWindow_Closed;
+
+            // TODO: Move into RestoreWindowPositionAction and trigger after load?
+            if (this._lastTimerWindowPostion.HasValue)
+            {
+                timerWindow.Top = this._lastTimerWindowPostion.Value.Y;
+                timerWindow.Left = this._lastTimerWindowPostion.Value.X;
+                timerWindow.WindowStartupLocation = WindowStartupLocation.Manual;
+            }
+
+
+            timerWindow.Show();
+
+            window.Hide();
+        }
+
+        private Point? _lastTimerWindowPostion;
+
+        void TimerWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var timerWindow = (Window)sender;
+            _lastTimerWindowPostion = new Point(timerWindow.Left, timerWindow.Top);
+        }
+
+        void TimerWindow_Closed(object sender, EventArgs e)
+        {
+            var timerWindow = (Window)sender;
+            
+            timerWindow.Closing -= TimerWindow_Closing;
+            timerWindow.Closed -= this.TimerWindow_Closed;
+
+            // TODO: Move into Show/HideMainWindowAction
+            var window = Window.GetWindow(this.View as DependencyObject);
             window.Show();
         }
 

@@ -35,7 +35,7 @@ namespace BellaCodeAgenda.Models
             }
         }
 
-        private TimeSpan _expectedDuration = TimeSpan.FromMinutes(10);
+        private TimeSpan _expectedDuration = TimeSpan.FromMinutes(1);
 
         /// <summary>
         /// How long the meeting is expected to last.
