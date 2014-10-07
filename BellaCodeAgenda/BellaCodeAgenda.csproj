@@ -68,6 +68,7 @@
     <Compile Include="Behaviors\MouseDragWindowBehavior.cs" />
     <Compile Include="BindableBase.cs" />
     <Compile Include="Converters\TimeSpanHoursMinutesConverter.cs" />
+    <Compile Include="Converters\TimeSpanMinutesDisplayConverter.cs" />
     <Compile Include="Converters\TimeSpanTimeOfDayConverter.cs" />
     <Compile Include="Converters\TimeSpanMinutesConverter.cs" />
     <Compile Include="Models\Meeting.cs" />

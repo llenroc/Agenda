@@ -5,11 +5,11 @@
 	xmlns:ViewModels="clr-namespace:BellaCodeAgenda.ViewModels" 
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-	mc:Ignorable="d">	
-	<Style x:Key="Agenda.ProgressBar" TargetType="{x:Type ProgressBar}">
-		<Setter Property="Foreground" Value="#01D328"/>
-		<Setter Property="Background" Value="#202020"/>
-		<Setter Property="BorderBrush" Value="DarkGreen"/>
+	mc:Ignorable="d">
+    <Style x:Key="Agenda.ProgressBar" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Background" Value="LightGray"/>
+        <Setter Property="Foreground" Value="Gray"/>
+		<Setter Property="BorderBrush" Value="DarkGray"/>
 		<Setter Property="BorderThickness" Value="1"/>
 		<Setter Property="Height" Value="20"/>
 		<Setter Property="Value" Value="50"/>

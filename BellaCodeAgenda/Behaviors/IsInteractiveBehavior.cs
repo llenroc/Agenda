@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 using System.Diagnostics;
+using System;
 
 namespace BellaCodeAgenda.Behaviors
 {
@@ -22,91 +23,48 @@ namespace BellaCodeAgenda.Behaviors
         protected override void OnAttached()
         {
             base.OnAttached();
-            this.AssociatedObject.MouseEnter += AssociatedObject_MouseEnter;            
-            this.AssociatedObject.MouseLeave += AssociatedObject_MouseLeave;
-            this.AssociatedObject.PreviewMouseMove += AssociatedObject_PreviewMouseMove;
-            this.AssociatedObject.IsMouseDirectlyOverChanged += AssociatedObject_IsMouseDirectlyOverChanged;
-            this.AssociatedObject.IsMouseCaptureWithinChanged += AssociatedObject_IsMouseCaptureWithinChanged;
-            this.AssociatedObject.GotFocus += AssociatedObject_GotFocus;
-            this.AssociatedObject.LostFocus += AssociatedObject_LostFocus;
-            this.AssociatedObject.GotKeyboardFocus += AssociatedObject_GotKeyboardFocus;
-            this.AssociatedObject.LostKeyboardFocus += AssociatedObject_LostKeyboardFocus;
-            this.AssociatedObject.TouchEnter += AssociatedObject_TouchEnter;
-            this.AssociatedObject.TouchLeave += AssociatedObject_TouchLeave;
+            this.AssociatedObject.Loaded += AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.MouseEnter += AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.MouseLeave += AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.PreviewMouseMove += AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.IsMouseDirectlyOverChanged += AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.IsMouseCaptureWithinChanged += AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.GotFocus += AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.LostFocus += AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.GotKeyboardFocus += AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.LostKeyboardFocus += AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.TouchEnter += AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.TouchLeave += AssociatedObject_InteractiveChanged;
 
             this.UpdateIsInteractive();
         }
-
+        
         protected override void OnDetaching()
         {
-            this.AssociatedObject.MouseEnter -= AssociatedObject_MouseEnter;
-            this.AssociatedObject.MouseLeave -= AssociatedObject_MouseLeave;
-            this.AssociatedObject.PreviewMouseMove -= AssociatedObject_PreviewMouseMove;
-            this.AssociatedObject.IsMouseDirectlyOverChanged -= AssociatedObject_IsMouseDirectlyOverChanged;
-            this.AssociatedObject.IsMouseCaptureWithinChanged -= AssociatedObject_IsMouseCaptureWithinChanged;
-            this.AssociatedObject.GotFocus -= AssociatedObject_GotFocus;
-            this.AssociatedObject.LostFocus -= AssociatedObject_LostFocus;
-            this.AssociatedObject.GotKeyboardFocus -= AssociatedObject_GotKeyboardFocus;
-            this.AssociatedObject.LostKeyboardFocus -= AssociatedObject_LostKeyboardFocus;
-            this.AssociatedObject.TouchEnter -= AssociatedObject_TouchEnter;
-            this.AssociatedObject.TouchLeave -= AssociatedObject_TouchLeave;
+            this.AssociatedObject.Loaded -= AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.MouseEnter -= AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.MouseLeave -= AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.PreviewMouseMove -= AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.IsMouseDirectlyOverChanged -= AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.IsMouseCaptureWithinChanged -= AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.GotFocus -= AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.LostFocus -= AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.GotKeyboardFocus -= AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.LostKeyboardFocus -= AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.TouchEnter -= AssociatedObject_InteractiveChanged;
+            this.AssociatedObject.TouchLeave -= AssociatedObject_InteractiveChanged;
 
             this.UpdateIsInteractive();
 
             base.OnDetaching();
         }
 
-        void AssociatedObject_IsMouseDirectlyOverChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void AssociatedObject_InteractiveChanged(object sender, EventArgs e)
         {
             this.UpdateIsInteractive();
         }
 
-        void AssociatedObject_IsMouseCaptureWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            this.UpdateIsInteractive();
-        }
-
-        private void AssociatedObject_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            this.UpdateIsInteractive();
-        }
-
-        private void AssociatedObject_MouseEnter(object sender, MouseEventArgs e)
-        {
-            this.UpdateIsInteractive();
-        }
-
-        private void AssociatedObject_MouseLeave(object sender, MouseEventArgs e)
-        {
-            this.UpdateIsInteractive();
-        }
-
-        private void AssociatedObject_GotFocus(object sender, RoutedEventArgs e)
-        {
-            this.UpdateIsInteractive();
-        }
-
-        private void AssociatedObject_LostFocus(object sender, RoutedEventArgs e)
-        {
-            this.UpdateIsInteractive();
-        }
-
-        private void AssociatedObject_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            this.UpdateIsInteractive();
-        }
-
-        private void AssociatedObject_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            this.UpdateIsInteractive();
-        }
-
-        void AssociatedObject_TouchEnter(object sender, TouchEventArgs e)
-        {
-            this.UpdateIsInteractive();
-        }
-
-        void AssociatedObject_TouchLeave(object sender, TouchEventArgs e)
+        private void AssociatedObject_InteractiveChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             this.UpdateIsInteractive();
         }
