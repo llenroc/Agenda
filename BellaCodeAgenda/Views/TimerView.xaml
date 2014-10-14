@@ -1,19 +1,22 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                    mc:Ignorable="d"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
                     xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
                     xmlns:bellacode="http://schemas.bellacode.com/xaml"                    
                     xmlns:agenda="clr-namespace:BellaCodeAgenda"
                     xmlns:agenda_behaviors="clr-namespace:BellaCodeAgenda.Behaviors"
                     xmlns:agenda_converters="clr-namespace:BellaCodeAgenda.Converters"
-                    xmlns:agenda_view_models="clr-namespace:BellaCodeAgenda.ViewModels">
+                    xmlns:agenda_view_models="clr-namespace:BellaCodeAgenda.ViewModels" xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" 
+                    mc:Ignorable="d"
+                    >
 
+    <bellacode:EnumVisibilityConverter x:Key="VisibleHiddenEnumConverter" VisibilityWhenEqual="Visible" VisibilityWhenNotEqual="Hidden" />
+    <bellacode:EnumVisibilityConverter x:Key="VisibleCollapsedEnumConverter" VisibilityWhenEqual="Visible" VisibilityWhenNotEqual="Collapsed" />
     <bellacode:ObjectRefVisibilityConverter x:Key="CollapsedWhenNullConverter" WhenNotNull="Visible" WhenNull="Collapsed" />
     <agenda_converters:TimeSpanMinutesDisplayConverter x:Key="TimeSpanMinutesDisplayConverter" MinuteSuffix="min" MinutesSuffix="mins"  />
-
+    <agenda_converters:ElapsedTimeDegreesConverter x:Key="ElapsedTimeDegreesConverter" />
 
     <Style x:Key="Timer.View" TargetType="{x:Type Control}">
         <Setter Property="Focusable" Value="False" />
@@ -21,16 +24,16 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Control}">
                     <bellacode:ViewModelScope ViewModelType="{x:Type agenda_view_models:TimerViewModel}" d:DesignWidth="400" d:DesignHeight="200">
-                        <Grid x:Name="TimerBackground" Background="#04CCCCCC" IsHitTestVisible="True">
+                        <Grid x:Name="TimerBackground" Background="#01FFFFFF" IsHitTestVisible="True">
                             <Grid.Resources>
                                 <Storyboard x:Key="InteractiveFadeIn">
                                     <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="TimerBackground">
-                                        <EasingColorKeyFrame KeyTime="0:0:0.5" Value="Gray"/>
+                                        <EasingColorKeyFrame KeyTime="0:0:0.5" Value="White"/>
                                     </ColorAnimationUsingKeyFrames>
                                 </Storyboard>
                                 <Storyboard x:Key="InteractiveFadeOut">
-                                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="TimerBackground">                                        
-                                        <EasingColorKeyFrame KeyTime="0:0:1" Value="#04CCCCCC"/>
+                                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="TimerBackground">
+                                        <EasingColorKeyFrame KeyTime="0:0:1" Value="#01FFFFFF"/>
                                     </ColorAnimationUsingKeyFrames>
                                 </Storyboard>
                             </Grid.Resources>
@@ -82,61 +85,143 @@
                                         </Grid>
                                     </Grid>
                                 </Border>
-                                <ProgressBar Value="{Binding PercentMeetingTimeUsed}" Style="{DynamicResource Agenda.ProgressBar}" MinWidth="100" Height="20" />
-                                <Grid Margin="0,8" Visibility="{Binding CurrentAgendaItem, Converter={StaticResource CollapsedWhenNullConverter}, Mode=OneWay}" >                                	
-                                	<Border TextBlock.Foreground="#FFE5E5E5" Padding="4" Margin="20,0,0,0" BorderBrush="#FF00A2FF" BorderThickness="1">
-                                		<Border.Background>
-                                			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                				<GradientStop Color="Black" Offset="1"/>
-                                				<GradientStop Color="#FF404040" Offset="0"/>
-                                			</LinearGradientBrush>
-                                		</Border.Background>
-                                		<Grid Margin="34,0,0,0" VerticalAlignment="Top">
-                                			<Grid.ColumnDefinitions>
-                                				<ColumnDefinition Width="Auto"/>
-                                				<ColumnDefinition Width="*"/>
-                                				<ColumnDefinition Width="Auto"/>
-                                			</Grid.ColumnDefinitions>
-                                			<CheckBox IsChecked="{Binding CurrentAgendaItem.IsComplete, Mode=TwoWay}" Style="{DynamicResource Agenda.CheckBox}" Grid.Column="0" VerticalAlignment="Top" Margin="2"/>
-                                			<TextBlock Text="{Binding CurrentAgendaItem.Name, Mode=OneWay}" Grid.Column="1" VerticalAlignment="Top" TextWrapping="WrapWithOverflow"/>
-                                			<TextBlock Text="{Binding CurrentAgendaItem.Duration, Converter={StaticResource TimeSpanMinutesDisplayConverter}, Mode=OneWay}" Grid.Column="2" VerticalAlignment="Top"/>
-
-                                		</Grid>
-                                	</Border>
-                                	<Border HorizontalAlignment="Left" VerticalAlignment="Top" CornerRadius="4" BorderThickness="3" RenderTransformOrigin="0.5,0.5" Margin="8,-3,0,-3">
-                                		<Border.BorderBrush>
-                                			<LinearGradientBrush EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
-                                				<GradientStop Color="#FF035481" Offset="1"/>
-                                				<GradientStop Color="#FF00A2FF" Offset="0"/>
-                                			</LinearGradientBrush>
-                                		</Border.BorderBrush>
-                                		<Border.Background>
-                                			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                				<GradientStop Color="#FF00A2FF" Offset="0"/>
-                                				<GradientStop Color="#FF035481" Offset="1"/>
-                                			</LinearGradientBrush>
-                                		</Border.Background>                                	
-                                		<Border.RenderTransform>
-                                			<TransformGroup>
-                                				<ScaleTransform/>
-                                				<SkewTransform AngleX="-30.000000000000014"/>
-                                				<RotateTransform/>
-                                				<TranslateTransform/>
-                                			</TransformGroup>
-                                		</Border.RenderTransform>                                	
-                                		<TextBlock TextWrapping="Wrap" Text="NOW" FontFamily="Arial" FontSize="12" RenderTransformOrigin="0.5,0.5" Margin="6,2" Foreground="White" FontStyle="Italic" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                			<TextBlock.RenderTransform>
-                                				<TransformGroup>
-                                					<ScaleTransform/>
-                                					<SkewTransform AngleX="30"/>
-                                					<RotateTransform/>
-                                					<TranslateTransform/>
-                                				</TransformGroup>
-                                			</TextBlock.RenderTransform>
-                                		</TextBlock>
-                                	</Border>
+                                <Grid Visibility="{Binding Status, Converter={StaticResource VisibleCollapsedEnumConverter}, ConverterParameter={x:Static agenda_view_models:TimerStatus.InProgress}, Mode=OneWay}">
+                                    <ed:Arc ArcThickness="1" ArcThicknessUnit="Percent" HorizontalAlignment="Center" Height="60" Stretch="None" Width="60" StrokeThickness="3" EndAngle="360" Margin="0,2" VerticalAlignment="Center">
+                                        <ed:Arc.StartAngle>
+                                            <MultiBinding Converter="{StaticResource ElapsedTimeDegreesConverter}">
+                                                <Binding Path="ElapsedTime" />
+                                                <Binding Path="Meeting.ExpectedDuration" />
+                                            </MultiBinding>
+                                        </ed:Arc.StartAngle>
+                                        <ed:Arc.Fill>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF00A2FF" Offset="1"/>
+                                                <GradientStop Color="#FF035481"/>
+                                            </LinearGradientBrush>
+                                        </ed:Arc.Fill>
+                                        <ed:Arc.Stroke>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF00A2FF"/>
+                                                <GradientStop Color="#FF035481" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </ed:Arc.Stroke>
+                                    </ed:Arc>
+                                    <ed:Arc ArcThickness="1" ArcThicknessUnit="Percent" HorizontalAlignment="Center" Height="30" Stretch="None" Width="30" StrokeThickness="1" EndAngle="360" VerticalAlignment="Center" Panel.ZIndex="1">
+                                    	<ed:Arc.StartAngle>
+                                    		<MultiBinding Converter="{StaticResource ElapsedTimeDegreesConverter}">
+                                    			<Binding Path="CurrentItemElapsedTime" />
+                                    			<Binding Path="CurrentAgendaItem.Duration" />
+                                    		</MultiBinding>                                            
+                                    	</ed:Arc.StartAngle>
+                                        <ed:Arc.Fill>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF00A2FF" />
+                                                <GradientStop Color="#FF035481" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </ed:Arc.Fill>
+                                        <ed:Arc.Stroke>
+                                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                <GradientStop Color="#FF00A2FF" Offset="1"/>
+                                                <GradientStop Color="#FF035481" />
+                                            </LinearGradientBrush>
+                                        </ed:Arc.Stroke>
+                                    </ed:Arc>
                                 </Grid>
-								<!--
+                                <Grid>
+                                    <Grid Visibility="{Binding Status, Converter={StaticResource VisibleHiddenEnumConverter}, ConverterParameter={x:Static agenda_view_models:TimerStatus.InProgress}, Mode=OneWay}">
+                                        <Grid Margin="0" Visibility="{Binding CurrentAgendaItem, Converter={StaticResource CollapsedWhenNullConverter}, Mode=OneWay}" >
+                                            <Border TextBlock.Foreground="#FFE5E5E5" Padding="4" Margin="20,0,0,0" BorderBrush="#FF00A2FF" BorderThickness="1">
+                                                <Border.Background>
+                                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                        <GradientStop Color="Black" Offset="1"/>
+                                                        <GradientStop Color="#FF404040" Offset="0"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <Grid Margin="34,0,0,0" VerticalAlignment="Top">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <CheckBox IsChecked="{Binding CurrentAgendaItem.IsComplete, Mode=TwoWay}" Style="{DynamicResource Agenda.CheckBox}" Grid.Column="0" VerticalAlignment="Top" Margin="2,6,2,2"/>
+                                                    <TextBlock Text="{Binding CurrentAgendaItem.Name, Mode=OneWay}" Grid.Column="1" VerticalAlignment="Top" TextWrapping="WrapWithOverflow" FontSize="18.667"/>
+
+                                                </Grid>
+                                            </Border>
+                                            <Border HorizontalAlignment="Left" VerticalAlignment="Top" CornerRadius="4" BorderThickness="3" RenderTransformOrigin="0.5,0.5" Margin="8,-3,0,-3">
+                                                <Border.BorderBrush>
+                                                    <LinearGradientBrush EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
+                                                        <GradientStop Color="#FF035481" Offset="1"/>
+                                                        <GradientStop Color="#FF00A2FF" Offset="0"/>
+                                                    </LinearGradientBrush>
+                                                </Border.BorderBrush>
+                                                <Border.Background>
+                                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                        <GradientStop Color="#FF00A2FF" Offset="0"/>
+                                                        <GradientStop Color="#FF035481" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <Border.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform/>
+                                                        <SkewTransform AngleX="-30.000000000000014"/>
+                                                        <RotateTransform/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Border.RenderTransform>
+                                                <TextBlock TextWrapping="Wrap" Text="NOW" FontFamily="Arial" FontSize="12" RenderTransformOrigin="0.5,0.5" Margin="6,2" Foreground="White" FontStyle="Italic" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <TextBlock.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform/>
+                                                            <SkewTransform AngleX="30"/>
+                                                            <RotateTransform/>
+                                                            <TranslateTransform/>
+                                                        </TransformGroup>
+                                                    </TextBlock.RenderTransform>
+                                                </TextBlock>
+                                            </Border>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Margin="0" Visibility="{Binding Status, Converter={StaticResource VisibleHiddenEnumConverter}, ConverterParameter={x:Static agenda_view_models:TimerStatus.Completed}, Mode=OneWay}" d:IsHidden="True" >
+                                        <Border TextBlock.Foreground="#FFE5E5E5" Padding="4" BorderBrush="#FF00A2FF" BorderThickness="1">
+                                            <Border.Background>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="#FF00B200" Offset="0"/>
+                                                    <GradientStop Color="#FF026402" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <Grid VerticalAlignment="Top">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="1" VerticalAlignment="Top" TextWrapping="WrapWithOverflow" Text="Meeting Is Complete" FontSize="18.667" Margin="4,0"/>
+
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                    <Grid Margin="0" Visibility="{Binding Status, Converter={StaticResource VisibleHiddenEnumConverter}, ConverterParameter={x:Static agenda_view_models:TimerStatus.NotStarted}, Mode=OneWay}" d:IsHidden="True" >
+                                        <Border TextBlock.Foreground="#FFE5E5E5" Padding="4" BorderBrush="#FF00A2FF" BorderThickness="1">
+                                            <Border.Background>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="#FF999999" Offset="0"/>
+                                                    <GradientStop Color="#FF666666" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <Grid VerticalAlignment="Top">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="1" VerticalAlignment="Top" TextWrapping="WrapWithOverflow" Text="Meeting Has Not Started Yet" FontSize="18.667" Margin="4,0"/>
+
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+                                <!--
                                 <ItemsControl ItemsSource="{Binding PastAgendaItems}" Margin="0,10,0,0">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>

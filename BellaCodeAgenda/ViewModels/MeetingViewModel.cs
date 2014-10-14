@@ -142,6 +142,8 @@ namespace BellaCodeAgenda.ViewModels
                     }
                     else
                     {
+                        inWhitespace = false;
+
                         // If there are additional non-digits, non-whitespace characters, then the previous number is not the minutes.
                         if (minutesBuilder.Length > 0)
                         {

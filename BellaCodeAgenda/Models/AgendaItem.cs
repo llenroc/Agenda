@@ -60,24 +60,6 @@ namespace BellaCodeAgenda.Models
                     this.RaisePropertyChanged();
                 }
             }
-        }
-
-        private bool _isPast;
-
-        public bool IsPast
-        {
-            get
-            {
-                return this._isPast;
-            }
-            set
-            {
-                if (this._isPast != value)
-                {
-                    this._isPast = value;
-                    this.RaisePropertyChanged();
-                }
-            }
-        }
+        }        
     }
 }

@@ -22,8 +22,6 @@ namespace BellaCodeAgenda.ViewModels
         {
             this._timer.Interval = TimeSpan.FromSeconds(1);
             this._timer.Tick += Timer_Tick;
-
-            this._pastAgendaItemsViewSource.Filter += _pastAgendaItemsViewSource_Filter;
         }        
 
         public Meeting Meeting
@@ -34,19 +32,56 @@ namespace BellaCodeAgenda.ViewModels
             }
         }
 
-        private double _percentMeetingTimeUsed;
+        private TimerStatus _status;
 
-        public double PercentMeetingTimeUsed
+        public TimerStatus Status
         {
             get
             {
-                return this._percentMeetingTimeUsed;
+                return this._status;
             }
-            private set
+            set
             {
-                if (this._percentMeetingTimeUsed != value)
+                if (this._status != value)
                 {
-                    this._percentMeetingTimeUsed = value;
+                    this._status = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+
+        private TimeSpan _elapsedTime;
+
+        public TimeSpan ElapsedTime
+        {
+            get
+            {
+                return this._elapsedTime;
+            }
+            set
+            {
+                if (this._elapsedTime != value)
+                {
+                    this._elapsedTime = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        private TimeSpan _remainingTime;
+
+        public TimeSpan RemainingTime
+        {
+            get
+            {
+                return this._remainingTime;
+            }
+            set
+            {
+                if (this._remainingTime != value)
+                {
+                    this._remainingTime = value;
                     this.RaisePropertyChanged();
                 }
             }
@@ -70,43 +105,43 @@ namespace BellaCodeAgenda.ViewModels
             }
         }
 
-        private ICollectionView _pastAgendItemsView;
+        private TimeSpan _currentItemElapsedTime;
 
-        public ICollectionView PastAgendaItems
+        public TimeSpan CurrentItemElapsedTime
         {
             get
             {
-                return this._pastAgendItemsView;
+                return this._currentItemElapsedTime;
             }
-            private set
+            set
             {
-                if (this._pastAgendItemsView != value)
+                if (this._currentItemElapsedTime != value)
                 {
-                    this._pastAgendItemsView = value;
-                    RaisePropertyChanged();
+                    this._currentItemElapsedTime = value;
+                    this.RaisePropertyChanged();
                 }
             }
         }
 
-        private void SetPastAgendaItemsViewSource()
+        private TimeSpan _currentItemRemainingTime;
+
+        public TimeSpan CurrentItemRemainingTime
         {
-            if (this.Meeting != null)
+            get
             {
-                this._pastAgendaItemsViewSource.Source = this.Meeting.AgendaItems;
-                this.PastAgendaItems = this._pastAgendaItemsViewSource.View;
+                return this._currentItemRemainingTime;
             }
-            else
+            set
             {
-                this._pastAgendaItemsViewSource.Source = null;
-                this.PastAgendaItems = null;
+                if (this._currentItemRemainingTime != value)
+                {
+                    this._currentItemRemainingTime = value;
+                    this.RaisePropertyChanged();
+                }
             }
         }
 
-        private void _pastAgendaItemsViewSource_Filter(object sender, FilterEventArgs e)
-        {
-            var agendaItem = e.Item as AgendaItem;
-            e.Accepted = (agendaItem != null && !agendaItem.IsComplete && agendaItem.IsPast);
-        }
+
 
         private bool _isInteractive;
 
@@ -120,7 +155,6 @@ namespace BellaCodeAgenda.ViewModels
             {
                 if (this._isInteractive != value)
                 {
-                    Debug.WriteLine("Interactive:" + value);
                     this._isInteractive = value;
                     this.RaisePropertyChanged();
                 }
@@ -129,35 +163,8 @@ namespace BellaCodeAgenda.ViewModels
 
         protected override void OnModelChanged(Meeting oldValue, Meeting newValue)
         {
-            base.OnModelChanged(oldValue, newValue);
-
-            if (oldValue != null)
-            {
-                foreach (var agendaItem in oldValue.AgendaItems)
-                {
-                    agendaItem.PropertyChanged -= agendaItem_PropertyChanged;
-                }
-            }
-
-            this.SetPastAgendaItemsViewSource();
-
-            if (newValue != null)
-            {
-                foreach (var agendaItem in newValue.AgendaItems)
-                {
-                    agendaItem.PropertyChanged += agendaItem_PropertyChanged;
-                }
-            }
-        }
-
-        private void agendaItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (this.PastAgendaItems != null)
-            {
-                if  (e.PropertyName == "IsComplete" || e.PropertyName == "IsPast")
-                this.PastAgendaItems.Refresh();
-            }
-        }
+            base.OnModelChanged(oldValue, newValue);            
+        }        
 
         protected override void OnViewChanged(object oldValue, object newValue)
         {
@@ -177,41 +184,124 @@ namespace BellaCodeAgenda.ViewModels
 
         private void UpdateProperties()
         {
+            this.UpdateElapsedTime();
+            this.UpdateRemainingTime();
+            this.UpdateCurrentAgendaItem();
+            this.UpdateStatus();
+
+            Debug.WriteLine("CurrentItemElapsedTime: " + this.CurrentItemElapsedTime.ToString());
+            Debug.WriteLine("CurrentAgendaItem.Duration: " + (this.CurrentAgendaItem != null ? this.CurrentAgendaItem.Duration.ToString() : string.Empty));
+        }        
+
+        private void UpdateElapsedTime()
+        {
             if (this.Meeting != null)
             {
-                var elapsedTime = DateTime.Now.TimeOfDay - this.Meeting.StartTime;
-                if (elapsedTime > TimeSpan.Zero)
-                {
-                    this.PercentMeetingTimeUsed = Math.Min(100, ((elapsedTime.TotalSeconds / this.Meeting.ExpectedDuration.TotalSeconds) * 100.0));
-                }
+                this.ElapsedTime = DateTime.Now.TimeOfDay - this.Meeting.StartTime;
 
-                var candidateCurrentAgendaItem = (AgendaItem)null;
-                if (this.Meeting.AgendaItems != null)
+                if (this.ElapsedTime < TimeSpan.Zero)
                 {
-                    var itemStart = TimeSpan.Zero;
-                    var itemEnd = TimeSpan.Zero;
-                    foreach (var agendaItem in this.Meeting.AgendaItems)
+                    this.ElapsedTime = TimeSpan.Zero;
+                }
+            }
+            else
+            {
+                this.ElapsedTime = TimeSpan.Zero;
+            }       
+        }
+
+        // ElapsedTime should be updated before calling this method.
+        private void UpdateRemainingTime()
+        {
+            if (this.Meeting != null)
+            {
+                this.RemainingTime = this.Meeting.ExpectedDuration - this.ElapsedTime;
+
+                if (this.RemainingTime < TimeSpan.Zero)
+                {
+                    this.RemainingTime = TimeSpan.Zero;
+                }
+            }
+            else
+            {
+                this.RemainingTime = TimeSpan.Zero;
+            }
+        }
+
+        // ElapsedTime should be updated before calling this method.
+        private void UpdateCurrentAgendaItem()
+        {
+            var candidateCurrentAgendaItem = (AgendaItem)null;
+            var candidateItemStartTime = (TimeSpan?)null;
+            var candidateItemEndTime = (TimeSpan?)null;
+            if (this.Meeting != null && this.Meeting.AgendaItems != null)
+            {
+                var itemStart = TimeSpan.Zero;
+                var itemEnd = TimeSpan.Zero;
+                foreach (var agendaItem in this.Meeting.AgendaItems)
+                {
+                    itemEnd = itemStart + agendaItem.Duration;
+
+                    // I look for the first non-complete agenda item that is not in the past.             
+                    if (!agendaItem.IsComplete)
                     {
-                        itemEnd = itemStart + agendaItem.Duration;
-
-                        // I look for the first non-complete agenda item
-                        // that is within the start/end timeframe for the item.
-                        if (!agendaItem.IsComplete)
+                        if (candidateCurrentAgendaItem == null && this.ElapsedTime <= itemEnd)
                         {
-                            if (candidateCurrentAgendaItem == null && elapsedTime <= itemEnd)
-                            {
-                                candidateCurrentAgendaItem = agendaItem;
-                            }                            
+                            candidateCurrentAgendaItem = agendaItem;
+                            candidateItemStartTime = itemStart;
+                            candidateItemEndTime = itemEnd;
                         }
+                    }
 
-                        // I update the IsPast for every agenda item
-                        agendaItem.IsPast = elapsedTime > itemEnd;                        
+                    itemStart += agendaItem.Duration;
+                }
+            }
 
-                        itemStart += agendaItem.Duration;
-                    }                    
+            this.CurrentAgendaItem = candidateCurrentAgendaItem;
+
+            if (candidateCurrentAgendaItem != null && candidateItemStartTime.HasValue && candidateItemEndTime.HasValue)
+            {
+                this.CurrentItemElapsedTime = this.ElapsedTime - candidateItemStartTime.Value;
+
+                if (this.CurrentItemElapsedTime < TimeSpan.Zero)
+                {
+                    this.CurrentItemElapsedTime = TimeSpan.Zero;
                 }
 
-                this.CurrentAgendaItem = candidateCurrentAgendaItem;
+                this.CurrentItemRemainingTime = candidateCurrentAgendaItem.Duration - this.CurrentItemElapsedTime;
+               
+                if (this.CurrentItemRemainingTime < TimeSpan.Zero)
+                {
+                    this.CurrentItemRemainingTime = TimeSpan.Zero;
+                }
+            }
+            else
+            {
+                this.CurrentItemElapsedTime = TimeSpan.Zero;
+                this.CurrentItemRemainingTime = TimeSpan.Zero;            
+            }
+        }       
+
+        private void UpdateStatus()
+        {
+            if (this.Meeting != null)
+            {
+                if (this.RemainingTime == TimeSpan.Zero)
+                {
+                    this.Status = TimerStatus.Completed;
+                }
+                else if (DateTime.Now.TimeOfDay >= this.Meeting.StartTime)
+                {
+                    this.Status = TimerStatus.InProgress;
+                }
+                else
+                {
+                    this.Status = TimerStatus.NotStarted;
+                }
+            }
+            else
+            {
+                this.Status = TimerStatus.NotStarted;
             }
         }
     }

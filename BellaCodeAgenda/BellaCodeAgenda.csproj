@@ -67,6 +67,7 @@
     <Compile Include="Behaviors\IsInteractiveBehavior.cs" />
     <Compile Include="Behaviors\MouseDragWindowBehavior.cs" />
     <Compile Include="BindableBase.cs" />
+    <Compile Include="Converters\ElapsedTimeDegreesConverter.cs" />
     <Compile Include="Converters\TimeSpanHoursMinutesConverter.cs" />
     <Compile Include="Converters\TimeSpanMinutesDisplayConverter.cs" />
     <Compile Include="Converters\TimeSpanTimeOfDayConverter.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\AgendaItem.cs" />
     <Compile Include="Session.cs" />
+    <Compile Include="ViewModels\TimerStatus.cs" />
     <Compile Include="ViewModels\TimerViewModel.cs" />
     <Compile Include="TimerWindow.xaml.cs">
       <DependentUpon>TimerWindow.xaml</DependentUpon>
