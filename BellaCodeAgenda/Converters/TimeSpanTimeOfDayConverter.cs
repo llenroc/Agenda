@@ -90,7 +90,13 @@ namespace BellaCodeAgenda.Converters
             }
 
             int hours = int.Parse(hoursText);
-            
+
+            // If there is no hint, then I use current AM/PM
+            if (isPmHint == null)
+            {
+                isPmHint = DateTime.Now.Hour >= 12;
+            }
+
             // If there is a hint that this is a PM time, I add 12 hours.
             if (isPmHint == true && hours < 12)
             {
@@ -101,15 +107,7 @@ namespace BellaCodeAgenda.Converters
             {
                 hours = 0;
             }
-            // If there is no hint, then I assume working hours.
-            // Numbers between 7-11 are AM, and 12-6 are PM
-            else if (isPmHint == null)
-            {
-                if (hours >= 1 && hours <= 6)
-                {
-                    hours += 12;
-                }
-            }
+                      
 
             int minutes = 0;
             if (!string.IsNullOrEmpty(minutesText))

@@ -33,7 +33,7 @@ namespace BellaCodeAgenda.Models
         }
 
 
-        private TimeSpan _startTime = TimeSpan.FromMinutes(Math.Floor(DateTime.Now.TimeOfDay.TotalMinutes));
+        private TimeSpan _startTime = DateTime.Now.TimeOfDay;
 
         /// <summary>
         /// The start time on the day the meeting occurs represented as a duration since midnight.
@@ -54,7 +54,7 @@ namespace BellaCodeAgenda.Models
             }
         }
 
-        private TimeSpan _expectedDuration = TimeSpan.FromMinutes(8);
+        private TimeSpan _expectedDuration = TimeSpan.FromMinutes(60);
 
         /// <summary>
         /// How long the meeting is expected to last.

@@ -26,7 +26,7 @@ namespace BellaCodeAgenda.ViewModels
             }
         }
 
-        private string _agendaText = "One\r\nTwo\r\nThree\r\nFour\r\nFive\r\nSix\r\nSeven\r\nEight\r\nNine\r\nTen";
+        private string _agendaText = string.Join("\r\n", new string[] { "Introductions 5", "Old Business 20", "New Business 20","Discussion 10","Closing 5" });
 
         /// <summary>
         /// The agenda the meeting represented by a series of items (one per line).
@@ -215,19 +215,32 @@ namespace BellaCodeAgenda.ViewModels
             // TODO: Move into Show/HideMainWindowAction
             var window = Window.GetWindow(this.View as DependencyObject);
             window.Show();
+            window.BringIntoView();
         }
 
-        public bool CanSetMeetingStartToNow
+        protected override void OnModelChanged(Meeting oldValue, Meeting newValue)
         {
-            get
+            if (oldValue == null && newValue != null)
             {
-                return this.Meeting != null;
+                this.InitializeStartTime();
             }
+
+            base.OnModelChanged(oldValue, newValue);
         }
 
-        public void SetMeetingStartToNow()
+        private void InitializeStartTime()
         {
-            this.Meeting.StartTime = TimeSpan.FromMinutes(Math.Floor(DateTime.Now.TimeOfDay.TotalMinutes));
+            var now = DateTime.Now.TimeOfDay;
+
+            if (now.Minutes > 30)
+            {
+                this.Meeting.StartTime = new TimeSpan(now.Hours, 0, 0).Add(TimeSpan.FromHours(1));
+            }
+            else
+            {
+                this.Meeting.StartTime = new TimeSpan(now.Hours, 0, 0).Add(TimeSpan.FromMinutes(30));
+            }
+
         }
     }
 }

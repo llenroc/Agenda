@@ -9,9 +9,7 @@ namespace BellaCodeAgenda
 {
     public static class MainCommands
     {
-        public static RoutedCommand StartMeeting = new RoutedCommand("StartMeeting", typeof(MainCommands));
-
-        public static RoutedCommand SetMeetingStartToNow = new RoutedCommand("SetMeetingStartToNow", typeof(MainCommands));
+        public static RoutedCommand StartMeeting = new RoutedCommand("StartMeeting", typeof(MainCommands));        
 
         public static RoutedCommand GoToNextAgendaItem = new RoutedCommand("GoToNextAgendaItem", typeof(MainCommands));
     }
