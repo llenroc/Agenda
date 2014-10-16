@@ -100,7 +100,7 @@
                                                 <ed:Arc.StartAngle>
                                                     <MultiBinding Converter="{StaticResource ElapsedTimeDegreesConverter}">
                                                         <Binding Path="ElapsedTime" />
-                                                        <Binding Path="Meeting.ExpectedDuration" />
+                                                        <Binding Path="TotalTime" />
                                                     </MultiBinding>
                                                 </ed:Arc.StartAngle>
                                                 <ed:Arc.Fill>

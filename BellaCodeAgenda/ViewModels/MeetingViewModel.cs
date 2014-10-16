@@ -80,15 +80,10 @@ namespace BellaCodeAgenda.ViewModels
             // I split the minutes not used by agenda items across those without durations.
             var noDurationAgendaItems = this.Meeting.AgendaItems.Where(x => x.Duration == TimeSpan.Zero);
             if (noDurationAgendaItems.Any())
-            {
-                var allocatedMinutes = this.Meeting.AgendaItems.Sum(x => x.Duration.TotalMinutes);
-                var leftOverMinutes = Math.Max(0, this.Meeting.ExpectedDuration.TotalMinutes - allocatedMinutes);
-                //var leftOverMinutesPerItem = (int)Math.Floor(leftOverMinutes / (double)noDurationAgendaItems.Count());
-                var leftOverMinutesPerItem = leftOverMinutes / (double)noDurationAgendaItems.Count();
-
+            {                
                 foreach (var noDurationAgendaItem in noDurationAgendaItems)
                 {
-                    noDurationAgendaItem.Duration = TimeSpan.FromMinutes(leftOverMinutesPerItem);
+                    noDurationAgendaItem.Duration = TimeSpan.FromMinutes(1);
                 }
             }
         }

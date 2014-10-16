@@ -50,6 +50,24 @@ namespace BellaCodeAgenda.ViewModels
             }
         }
 
+        private TimeSpan _totalTime = TimeSpan.FromMinutes(60);
+       
+        public TimeSpan TotalTime
+        {
+            get
+            {
+                return this._totalTime;
+            }
+            set
+            {
+                if (this._totalTime != value)
+                {
+                    this._totalTime = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
 
         private TimeSpan _elapsedTime;
 
@@ -179,6 +197,8 @@ namespace BellaCodeAgenda.ViewModels
 
         protected override void OnModelChanged(Meeting oldValue, Meeting newValue)
         {
+            this.UpdateTotalTime();
+
             base.OnModelChanged(oldValue, newValue);            
         }        
 
@@ -206,6 +226,18 @@ namespace BellaCodeAgenda.ViewModels
             this.UpdateStatus();
         }        
 
+        private void UpdateTotalTime()
+        {
+            if (this.Meeting != null && this.Meeting.AgendaItems != null)
+            {
+                this.TotalTime = TimeSpan.FromMinutes(this.Meeting.AgendaItems.Sum(x => x.Duration.TotalMinutes));
+            }
+            else
+            {
+                this.TotalTime = TimeSpan.Zero;
+            }
+        }
+
         private void UpdateElapsedTime()
         {
             if (this.Meeting != null)
@@ -228,7 +260,7 @@ namespace BellaCodeAgenda.ViewModels
         {
             if (this.Meeting != null)
             {
-                this.RemainingTime = this.Meeting.ExpectedDuration - this.ElapsedTime;
+                this.RemainingTime = this.TotalTime - this.ElapsedTime;
 
                 if (this.RemainingTime < TimeSpan.Zero)
                 {

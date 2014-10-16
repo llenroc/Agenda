@@ -45,34 +45,20 @@
                                 </Grid>
                             </Grid>
                             <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Margin="0,5,0,0">
-                            	<Grid.RowDefinitions>
-                            		<RowDefinition Height="Auto"/>
-                            		<RowDefinition Height="Auto"/>                                    
-                            	</Grid.RowDefinitions>
-                        		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Start Time" FontFamily="Segoe UI Light" FontSize="18.667" Foreground="#FF404040"/>
-                                <Grid Grid.Row="1">                                   
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Start Time" FontFamily="Segoe UI Light" FontSize="18.667" Foreground="#FF404040"/>
+                                <Grid Grid.Row="1">
                                     <TextBox TextWrapping="Wrap" Text="{Binding Meeting.StartTime, Mode=TwoWay, Converter={StaticResource TimeSpanTimeOfDayConverter}}" MinWidth="100" VerticalContentAlignment="Center" Height="Auto" Margin="5,5,0,0">
                                         <i:Interaction.Behaviors>
                                             <bellacode:EnterKeyUpdatesSourceBehavior />
                                         </i:Interaction.Behaviors>
-                                    </TextBox>                                    
-                                </Grid>                              
-                        	</Grid>
-                        	<Grid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Margin="0,5,0,0">
-                        		<Grid.RowDefinitions>
-                        			<RowDefinition Height="Auto"/>
-                        			<RowDefinition Height="Auto"/>
-                        		</Grid.RowDefinitions>
-                                <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Expected Duration" FontFamily="Segoe UI Light" FontSize="18.667" Foreground="#FF404040" />                                                                   
-                        		<WrapPanel Orientation="Horizontal" Grid.Row="1" Margin="5,5,0,0">
-                                    <TextBox TextWrapping="Wrap" Text="{Binding Meeting.ExpectedDuration, Mode=TwoWay, Converter={StaticResource TimeSpanHoursMinutesConverter}}" MinWidth="100" VerticalContentAlignment="Center" Height="25" Margin="0" Width="100">
-                                        <i:Interaction.Behaviors>
-                                            <bellacode:EnterKeyUpdatesSourceBehavior />
-                                        </i:Interaction.Behaviors>
-                                    </TextBox>                        			
-                        		</WrapPanel>
-                        	</Grid>
-                        	<Grid Grid.Row="3" Margin="0,5,0,0">
+                                    </TextBox>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="2" Margin="0,5,0,0">
                         		<Grid.RowDefinitions>
                         			<RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>

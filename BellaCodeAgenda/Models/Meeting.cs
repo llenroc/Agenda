@@ -52,28 +52,7 @@ namespace BellaCodeAgenda.Models
                     this.RaisePropertyChanged();
                 }
             }
-        }
-
-        private TimeSpan _expectedDuration = TimeSpan.FromMinutes(60);
-
-        /// <summary>
-        /// How long the meeting is expected to last.
-        /// </summary>
-        public TimeSpan ExpectedDuration
-        {
-            get
-            {
-                return this._expectedDuration;
-            }
-            set
-            {
-                if (this._expectedDuration != value)
-                {
-                    this._expectedDuration = value;
-                    this.RaisePropertyChanged();
-                }
-            }
-        }
+        }       
 
         private Collection<AgendaItem> _agendaItems;
 
