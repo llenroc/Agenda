@@ -170,7 +170,7 @@ namespace BellaCodeAgenda.ViewModels
 
 
         public void StartMeeting()
-        {
+        {           
             this.UpdateMeetingAgendaItems();
 
             var window = Window.GetWindow(this.View as DependencyObject);

@@ -137,11 +137,10 @@ namespace BellaCodeAgenda.ViewModels
                 {
                     this._currentItemRemainingTime = value;
                     this.RaisePropertyChanged();
+                    this.RaisePropertyChanged("CanGoToNextAgendaItem");
                 }
             }
         }
-
-
 
         private bool _isInteractive;
 
@@ -158,6 +157,23 @@ namespace BellaCodeAgenda.ViewModels
                     this._isInteractive = value;
                     this.RaisePropertyChanged();
                 }
+            }
+        }
+
+        public bool CanGoToNextAgendaItem
+        {
+            get
+            {
+                return this.CurrentAgendaItem != null;
+            }
+        }
+
+        public void GoToNextAgendaItem()
+        {
+            if (this.CurrentAgendaItem != null)
+            {
+                this.CurrentAgendaItem.IsComplete = true;
+                this.UpdateProperties();
             }
         }
 
@@ -188,9 +204,6 @@ namespace BellaCodeAgenda.ViewModels
             this.UpdateRemainingTime();
             this.UpdateCurrentAgendaItem();
             this.UpdateStatus();
-
-            Debug.WriteLine("CurrentItemElapsedTime: " + this.CurrentItemElapsedTime.ToString());
-            Debug.WriteLine("CurrentAgendaItem.Duration: " + (this.CurrentAgendaItem != null ? this.CurrentAgendaItem.Duration.ToString() : string.Empty));
         }        
 
         private void UpdateElapsedTime()

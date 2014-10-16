@@ -14,6 +14,25 @@ namespace BellaCodeAgenda.Models
             this.AgendaItems = new Collection<AgendaItem>();
         }
 
+        private string _title = "Meeting Agenda";
+
+        public string Title
+        {
+            get
+            {
+                return this._title;
+            }
+            set
+            {
+                if (this._title != value)
+                {
+                    this._title = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+
         private TimeSpan _startTime = TimeSpan.FromMinutes(Math.Floor(DateTime.Now.TimeOfDay.TotalMinutes));
 
         /// <summary>
@@ -35,7 +54,7 @@ namespace BellaCodeAgenda.Models
             }
         }
 
-        private TimeSpan _expectedDuration = TimeSpan.FromMinutes(1);
+        private TimeSpan _expectedDuration = TimeSpan.FromMinutes(8);
 
         /// <summary>
         /// How long the meeting is expected to last.
