@@ -67,8 +67,8 @@
                         		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Agenda" FontFamily="Segoe UI Light" FontSize="18.667"/>
                                 <StackPanel Grid.Row="1"  Margin="5,0" TextElement.Foreground="#FF404040">
                                     <TextBlock Text="Enter each agenda item on a seperate line." TextWrapping="Wrap" />
-                                    <TextBlock Text="Start each agenda item with the name, followed by the number of minutes planned for that item." TextWrapping="Wrap" />
-                                    <TextBlock Text="Agenda items without minutes will evenly divide meeting time." TextWrapping="Wrap" />
+                                    <TextBlock Text="Start each agenda item with the the number of minutes planned for that item followed by the name." TextWrapping="Wrap" />
+                                    <TextBlock Text="Agenda items without minutes will default to a duration of 1 minute." TextWrapping="Wrap" />
                                 </StackPanel>
                                 <TextBox TextWrapping="Wrap" Text="{Binding AgendaText, Mode=TwoWay}" AcceptsReturn="True" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="2" Margin="5,5,5,5" MinHeight="200"/>
                         	</Grid>

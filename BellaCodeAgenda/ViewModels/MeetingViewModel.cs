@@ -26,7 +26,7 @@ namespace BellaCodeAgenda.ViewModels
             }
         }
 
-        private string _agendaText = string.Join("\r\n", new string[] { "Introductions 5", "Old Business 20", "New Business 20","Discussion 10","Closing 5" });
+        private string _agendaText = string.Join("\r\n", new string[] { "5 Introductions", "20 Old Business", "20 New Business", "10 Discussion", "5 Closing" });
 
         /// <summary>
         /// The agenda the meeting represented by a series of items (one per line).
@@ -57,6 +57,50 @@ namespace BellaCodeAgenda.ViewModels
         // any characters
         // end of line        
 
+        private static Regex _agendaItemsRegex = new Regex(@"^\s*(?<minutes>\d+){0,1}(?<name>.*)$", RegexOptions.Compiled | RegexOptions.Multiline);
+
+        private void UpdateMeetingAgendaItems()
+        {
+
+            this.Meeting.AgendaItems.Clear();
+
+            if (!string.IsNullOrEmpty(this.AgendaText))
+            {
+                var matches = _agendaItemsRegex.Matches(this.AgendaText);
+
+                foreach (var match in matches.Cast<Match>())
+                {
+                    var minutesGroup = match.Groups["minutes"];
+                    var nameGroup = match.Groups["name"];
+
+                    int minutes = 0;
+                    if (minutesGroup.Success)
+                    {
+                        // if this fails, it will still be zero minutes.
+                        int.TryParse(minutesGroup.Value, out minutes);                        
+                    }
+
+                    string name = string.Empty;
+                    if (nameGroup.Success)
+                    {
+                        name = nameGroup.Value.Trim();
+                    }
+
+                    // I skip lines with nothing of value in them
+                    if (minutes == 0 && string.IsNullOrEmpty(name))
+                    {
+                        continue;
+                    }
+
+                    // I ensure each item's duration is between 1 minute and 24 hours
+                    minutes = Math.Min(Math.Max(1, minutes), 24 * 60);
+
+                    this.Meeting.AgendaItems.Add(new AgendaItem() { Name = name, Duration = TimeSpan.FromMinutes(minutes) });
+                }
+            }
+        }
+
+#if false
         private static char[] LineEndings = new char[] { '\r', '\n' };
 
         private void UpdateMeetingAgendaItems()
@@ -162,10 +206,10 @@ namespace BellaCodeAgenda.ViewModels
                 return null;
             }
         }
-
+#endif
 
         public void StartMeeting()
-        {           
+        {
             this.UpdateMeetingAgendaItems();
 
             var window = Window.GetWindow(this.View as DependencyObject);
@@ -203,7 +247,7 @@ namespace BellaCodeAgenda.ViewModels
         void TimerWindow_Closed(object sender, EventArgs e)
         {
             var timerWindow = (Window)sender;
-            
+
             timerWindow.Closing -= TimerWindow_Closing;
             timerWindow.Closed -= this.TimerWindow_Closed;
 
