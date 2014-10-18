@@ -9,6 +9,9 @@ Rambling, disorganized meetings are a waste of time and make you appear less com
 I recommend reading about [Robert's Rules of Order](http://en.wikipedia.org/wiki/Robert%27s_Rules_of_Order) 
 to make your meetings effective.
 
+![Main Window](https://github.com/BellaCode/Agenda/blob/master/screenshots/MainWindow.PNG "Main Window")
+![Timer Window](https://github.com/BellaCode/Agenda/blob/master/screenshots/TimerWindow.PNG "Timer Window")
+
 Features
 ------
 - Smart start time entry
