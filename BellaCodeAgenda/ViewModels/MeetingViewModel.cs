@@ -270,16 +270,7 @@ namespace BellaCodeAgenda.ViewModels
         private void InitializeStartTime()
         {
             var now = DateTime.Now.TimeOfDay;
-
-            if (now.Minutes > 30)
-            {
-                this.Meeting.StartTime = new TimeSpan(now.Hours, 0, 0).Add(TimeSpan.FromHours(1));
-            }
-            else
-            {
-                this.Meeting.StartTime = new TimeSpan(now.Hours, 0, 0).Add(TimeSpan.FromMinutes(30));
-            }
-
+            this.Meeting.StartTime = new TimeSpan(now.Hours, now.Minutes + 1, 0);
         }
     }
 }

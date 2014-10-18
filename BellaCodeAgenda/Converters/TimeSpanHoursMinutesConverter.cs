@@ -45,11 +45,8 @@ namespace BellaCodeAgenda.Converters
                 timeSpan = new TimeSpan(Math.Abs(timeSpan.Value.Ticks));
             }
 
-            var integer = Math.Truncate(timeSpan.Value.TotalHours);
-            var fraction = timeSpan.Value.TotalHours - integer;
-
-            int hours = (int)integer;
-            int minutes = (int)Math.Round(60.0 * fraction, 0);
+            int hours = (int)Math.Truncate(timeSpan.Value.TotalHours);
+            int minutes = timeSpan.Value.Minutes;
 
             return string.Format("{0}h {1:d2}m", hours, minutes);
         }

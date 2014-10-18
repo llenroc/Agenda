@@ -6,10 +6,10 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
                     xmlns:bellacode="http://schemas.bellacode.com/xaml"                    
                     xmlns:agenda="clr-namespace:BellaCodeAgenda"
+                    xmlns:agenda_actions="clr-namespace:BellaCodeAgenda.Actions"
                     xmlns:agenda_converters="clr-namespace:BellaCodeAgenda.Converters"
                     xmlns:agenda_view_models="clr-namespace:BellaCodeAgenda.ViewModels">
 
-    <agenda_converters:TimeSpanHoursMinutesConverter x:Key="TimeSpanHoursMinutesConverter"  />
     <agenda_converters:TimeSpanTimeOfDayConverter x:Key="TimeSpanTimeOfDayConverter"  />
 
 
@@ -23,61 +23,71 @@
                             <i:Interaction.Behaviors>
                                 <bellacode:BindCommandBehavior Command="{x:Static agenda:MainCommands.StartMeeting}"/>                                
                             </i:Interaction.Behaviors>
-                            <Grid.RowDefinitions>
+                            <Grid.RowDefinitions>								
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>                                
                                 <RowDefinition/>
                                 <RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Title" FontFamily="Segoe UI Light" FontSize="18.667" Foreground="#FF404040"/>
-                                <Grid Grid.Row="1" >
-                                    <TextBox Text="{Binding Meeting.Title, Mode=TwoWay}" Margin="5,5,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
-                                        <i:Interaction.Behaviors>
-                                            <bellacode:EnterKeyUpdatesSourceBehavior />
-                                        </i:Interaction.Behaviors>
-                                    </TextBox>                                    
-                                </Grid>
-                            </Grid>
-                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Margin="0,5,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Start Time" FontFamily="Segoe UI Light" FontSize="18.667" Foreground="#FF404040"/>
-                                <Grid Grid.Row="1">
-                                    <TextBox TextWrapping="Wrap" Text="{Binding Meeting.StartTime, Mode=TwoWay, Converter={StaticResource TimeSpanTimeOfDayConverter}}" MinWidth="100" VerticalContentAlignment="Center" Height="Auto" Margin="5,5,0,0">
-                                        <i:Interaction.Behaviors>
-                                            <bellacode:EnterKeyUpdatesSourceBehavior />
-                                        </i:Interaction.Behaviors>
-                                    </TextBox>
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Row="2" Margin="0,5,0,0">
+                        	<Grid Grid.Row="0">
                         		<Grid.RowDefinitions>
                         			<RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                        			<RowDefinition Height="Auto"/>
+                        		</Grid.RowDefinitions>
+                        		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Title" FontFamily="Segoe UI Light" FontSize="18.667" Foreground="#FF035481"/>
+                        		<Grid Grid.Row="1" >
+                        			<TextBox Text="{Binding Meeting.Title, Mode=TwoWay}" Margin="5,5,0,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
+                        				<i:Interaction.Behaviors>
+                        					<bellacode:EnterKeyUpdatesSourceBehavior />
+                        				</i:Interaction.Behaviors>
+                        			</TextBox>                                    
+                        		</Grid>
+                        	</Grid>
+                        	<Grid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Margin="0,5,0,0">
+                        		<Grid.RowDefinitions>
+                        			<RowDefinition Height="Auto"/>
+                        			<RowDefinition Height="Auto"/>
+                        		</Grid.RowDefinitions>
+                        		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Start Time" FontFamily="Segoe UI Light" FontSize="18.667" Foreground="#FF035481"/>
+                        		<Grid Grid.Row="1">
+                        			<TextBox TextWrapping="Wrap" Text="{Binding Meeting.StartTime, Converter={StaticResource TimeSpanTimeOfDayConverter}, Mode=TwoWay}" VerticalContentAlignment="Center" Height="Auto" Margin="5,5,0,0" Width="70" HorizontalAlignment="Left">
+                        				<i:Interaction.Behaviors>
+                        					<bellacode:EnterKeyUpdatesSourceBehavior />
+                        				</i:Interaction.Behaviors>
+                        			</TextBox>
+                        		</Grid>
+                        	</Grid>
+                        	<Grid Grid.Row="2" Margin="0,5,0,0">
+                        		<Grid.RowDefinitions>
+                        			<RowDefinition Height="Auto"/>
+                        			<RowDefinition Height="Auto"/>
                         			<RowDefinition/>
                         		</Grid.RowDefinitions>
-                        		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Agenda" FontFamily="Segoe UI Light" FontSize="18.667"/>
-                                <StackPanel Grid.Row="1"  Margin="5,0" TextElement.Foreground="#FF404040">
-                                    <TextBlock Text="Enter each agenda item on a seperate line." TextWrapping="Wrap" />
-                                    <TextBlock Text="Start each agenda item with the the number of minutes planned for that item followed by the name." TextWrapping="Wrap" />
-                                    <TextBlock Text="Agenda items without minutes will default to a duration of 1 minute." TextWrapping="Wrap" />
-                                </StackPanel>
-                                <TextBox TextWrapping="Wrap" Text="{Binding AgendaText, Mode=TwoWay}" AcceptsReturn="True" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="2" Margin="5,5,5,5" MinHeight="200"/>
+                        		<TextBlock HorizontalAlignment="Left" TextWrapping="NoWrap" VerticalAlignment="Top" Text="Agenda" FontFamily="Segoe UI Light" FontSize="18.667"  Foreground="#FF035481"/>
+                        		<StackPanel Grid.Row="1"  Margin="5,0" TextElement.Foreground="#FF404040">
+                        			<TextBlock Text="Enter one agenda item per line." TextWrapping="Wrap" />
+                        			<TextBlock Text="Start each agenda item with the duration in minutes, followed the title." TextWrapping="Wrap" />                                                                       
+                        		</StackPanel>
+                        		<TextBox TextWrapping="Wrap" Text="{Binding AgendaText, Mode=TwoWay}" AcceptsReturn="True" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="2" Margin="5,5,5,5" MinHeight="200"/>
                         	</Grid>
-                        	<Grid Grid.Row="4">
+                        	<Grid Grid.Row="3">
                         		<Grid.ColumnDefinitions>
+                        			<ColumnDefinition Width="Auto"/>
                         			<ColumnDefinition/>
                         			<ColumnDefinition Width="Auto"/>
                         		</Grid.ColumnDefinitions>
-                                <Button Content="Start Meeting" Command="{x:Static agenda:MainCommands.StartMeeting}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="5" MinWidth="100"/>
+                        		<Button Content="How This Thing Works" VerticalAlignment="Top" Margin="5" MinWidth="150" Height="30">
+                        			<i:Interaction.Triggers>
+                        				<i:EventTrigger EventName="Click">      
+                        					<agenda_actions:OpenHelpWindowAction />
+                        				</i:EventTrigger>
+                        			</i:Interaction.Triggers>
+                        		</Button>
+                        		<Button Content="Let's Get Started" Command="{x:Static agenda:MainCommands.StartMeeting}" VerticalAlignment="Top" Grid.Column="2" Margin="5" MinWidth="150" Height="30"/>
+                        	</Grid>
+                        	<Grid Grid.Row="4">
+                        		<TextBlock TextWrapping="Wrap" Text="Open Source: https://github.com/BellaCode/Agenda" Foreground="#FFBFBFBF" Margin="0,5,0,0"/>
                         	</Grid>
                         </Grid>
                     </bellacode:ViewModelScope>

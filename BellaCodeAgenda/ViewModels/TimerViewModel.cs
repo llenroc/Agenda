@@ -22,7 +22,7 @@ namespace BellaCodeAgenda.ViewModels
         {
             this._timer.Interval = TimeSpan.FromSeconds(1);
             this._timer.Tick += Timer_Tick;
-        }        
+        }
 
         public Meeting Meeting
         {
@@ -51,7 +51,7 @@ namespace BellaCodeAgenda.ViewModels
         }
 
         private TimeSpan _totalTime = TimeSpan.FromMinutes(60);
-       
+
         public TimeSpan TotalTime
         {
             get
@@ -160,6 +160,25 @@ namespace BellaCodeAgenda.ViewModels
             }
         }
 
+        private int _completedAgendaItemCount;
+
+        public int CompletedAgendaItemCount
+        {
+            get
+            {
+                return this._completedAgendaItemCount;
+            }
+            set
+            {
+                if (this._completedAgendaItemCount != value)
+                {
+                    this._completedAgendaItemCount = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+
         private bool _isInteractive;
 
         public bool IsInteractive
@@ -199,8 +218,8 @@ namespace BellaCodeAgenda.ViewModels
         {
             this.UpdateTotalTime();
 
-            base.OnModelChanged(oldValue, newValue);            
-        }        
+            base.OnModelChanged(oldValue, newValue);
+        }
 
         protected override void OnViewChanged(object oldValue, object newValue)
         {
@@ -224,7 +243,7 @@ namespace BellaCodeAgenda.ViewModels
             this.UpdateRemainingTime();
             this.UpdateCurrentAgendaItem();
             this.UpdateStatus();
-        }        
+        }
 
         private void UpdateTotalTime()
         {
@@ -252,7 +271,7 @@ namespace BellaCodeAgenda.ViewModels
             else
             {
                 this.ElapsedTime = TimeSpan.Zero;
-            }       
+            }
         }
 
         // ElapsedTime should be updated before calling this method.
@@ -273,12 +292,15 @@ namespace BellaCodeAgenda.ViewModels
             }
         }
 
-        // ElapsedTime should be updated before calling this method.
+        // ElapsedTime should be updated before calling this method.    
+        // Side effect: Updates AgendaItem.IsComplete
         private void UpdateCurrentAgendaItem()
         {
             var candidateCurrentAgendaItem = (AgendaItem)null;
             var candidateItemStartTime = (TimeSpan?)null;
             var candidateItemEndTime = (TimeSpan?)null;
+            var completedAgendaItemCount = 0;
+
             if (this.Meeting != null && this.Meeting.AgendaItems != null)
             {
                 var itemStart = TimeSpan.Zero;
@@ -287,15 +309,23 @@ namespace BellaCodeAgenda.ViewModels
                 {
                     itemEnd = itemStart + agendaItem.Duration;
 
-                    // I look for the first non-complete agenda item that is not in the past.             
-                    if (!agendaItem.IsComplete)
+                    // I mark any agenda items that have past complete
+                    if (this.ElapsedTime > itemEnd)
                     {
-                        if (candidateCurrentAgendaItem == null && this.ElapsedTime <= itemEnd)
-                        {
-                            candidateCurrentAgendaItem = agendaItem;
-                            candidateItemStartTime = itemStart;
-                            candidateItemEndTime = itemEnd;
-                        }
+                        agendaItem.IsComplete = true;
+                    }
+
+                    if (agendaItem.IsComplete)
+                    {
+                        completedAgendaItemCount++;
+                    }
+
+                    // I look for the first non-complete agenda item that is not in the past.             
+                    if (candidateCurrentAgendaItem == null && !agendaItem.IsComplete)
+                    {
+                        candidateCurrentAgendaItem = agendaItem;
+                        candidateItemStartTime = itemStart;
+                        candidateItemEndTime = itemEnd;
                     }
 
                     itemStart += agendaItem.Duration;
@@ -303,7 +333,9 @@ namespace BellaCodeAgenda.ViewModels
             }
 
             this.CurrentAgendaItem = candidateCurrentAgendaItem;
+            this.CompletedAgendaItemCount = completedAgendaItemCount;
 
+            // I update the CurrentItemElapsedTime and CurrentItemRemainingTime based on the calcualted candidateItemEndTime
             if (candidateCurrentAgendaItem != null && candidateItemStartTime.HasValue && candidateItemEndTime.HasValue)
             {
                 this.CurrentItemElapsedTime = this.ElapsedTime - candidateItemStartTime.Value;
@@ -313,8 +345,8 @@ namespace BellaCodeAgenda.ViewModels
                     this.CurrentItemElapsedTime = TimeSpan.Zero;
                 }
 
-                this.CurrentItemRemainingTime = candidateCurrentAgendaItem.Duration - this.CurrentItemElapsedTime;
-               
+                this.CurrentItemRemainingTime = candidateItemEndTime.Value - this.ElapsedTime;
+
                 if (this.CurrentItemRemainingTime < TimeSpan.Zero)
                 {
                     this.CurrentItemRemainingTime = TimeSpan.Zero;
@@ -323,9 +355,9 @@ namespace BellaCodeAgenda.ViewModels
             else
             {
                 this.CurrentItemElapsedTime = TimeSpan.Zero;
-                this.CurrentItemRemainingTime = TimeSpan.Zero;            
+                this.CurrentItemRemainingTime = TimeSpan.Zero;
             }
-        }       
+        }        
 
         private void UpdateStatus()
         {

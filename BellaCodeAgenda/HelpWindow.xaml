@@ -1,0 +1,40 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+    xmlns:bellacode="http://schemas.bellacode.com/xaml"                    
+	x:Class="BellaCodeAgenda.HelpWindow"
+	x:Name="Window"
+	Title="How This Thing Works"
+	Width="900" Height="600" WindowStartupLocation="CenterScreen" Icon="App.ico">
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<TextBlock TextWrapping="Wrap" Width="300" Margin="10,10,0,0"><Run Text="Enter the title of your meeting, the start time, and a set of agenda items. Each agenda item should have a duration in minutes and a title."/><LineBreak/><Run/><LineBreak/><Run Text="Click 'Let's Get Started' to open the meeting timer window (pictured on the right)."/><LineBreak/><Run/><LineBreak/><Run Text="You can drag the meeting timer to place it where you want on the screen. "/><LineBreak/><Run/><LineBreak/><Run Text="Based on your start time and the duration of each agenda item, the window will show your current agenda item. "/><LineBreak/><Run/><LineBreak/><Run Text="The big, outer clock displays how much meeting time you have left.  The small, inner clock displays how much time your have left for the current agenda item."/><LineBreak/><Run/><LineBreak/><Run Text="If you finish an agenda item early, click the arrow button.  This will move to the next agenda item.  The agenda item clock will stay full until you've used up your extra time."/><LineBreak/><Run/><LineBreak/><Run Text="If you need to update your agenda mid-meeting, close the meeting timer window.  You can then adjust your agenda and start the meeting again.  Because the agenda is based on a start time, it will pick up where it left off.  You may have to click the arrow button if you were previously ahead of schedule."/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
+			<Viewbox Grid.Column="1" Margin="25">
+				<Image Source="Diagram.PNG" Height="349" Width="557" Stretch="None"/>
+			</Viewbox>
+		</Grid>
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+            <Button Content="Close" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Grid.Column="1" Margin="5">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <bellacode:CloseWindowAction/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+	</Grid>
+</Window>

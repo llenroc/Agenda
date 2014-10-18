@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="BellaCode.Mvvm">
       <HintPath>packages\BellaCode.Mvvm.1.0.6\lib\net45\BellaCode.Mvvm.dll</HintPath>
@@ -64,14 +67,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actions\OpenHelpWindowAction.cs" />
     <Compile Include="Behaviors\IsInteractiveBehavior.cs" />
     <Compile Include="Behaviors\MouseDragWindowBehavior.cs" />
     <Compile Include="BindableBase.cs" />
     <Compile Include="Converters\ElapsedTimeDegreesConverter.cs" />
     <Compile Include="Converters\TimeSpanHoursMinutesConverter.cs" />
-    <Compile Include="Converters\TimeSpanMinutesDisplayConverter.cs" />
+    <Compile Include="Converters\RemainingTimeSpanDisplayConverter.cs" />
     <Compile Include="Converters\TimeSpanTimeOfDayConverter.cs" />
     <Compile Include="Converters\TimeSpanMinutesConverter.cs" />
+    <Compile Include="HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\AgendaItem.cs" />
     <Compile Include="Session.cs" />
@@ -80,6 +87,10 @@
     <Compile Include="TimerWindow.xaml.cs">
       <DependentUpon>TimerWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="HelpWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Agenda.CheckBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -150,6 +161,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Diagram.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="App.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
