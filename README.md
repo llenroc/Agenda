@@ -17,6 +17,11 @@ to make your meetings effective.
 
 ![Timer Window](https://github.com/BellaCode/Agenda/blob/master/screenshots/TimerWindow.PNG )
 
+Downloads
+------
+Agenda is a stand-alone executable (requires .NET Framework 4.5)
+You can download either the [EXE](https://github.com/BellaCode/Agenda/blob/master/latest/BellaCodeAgenda.exe) or the [ZIP](https://github.com/BellaCode/Agenda/blob/master/latest/BellaCodeAgenda.zip).
+
 Features
 ------
 - Smart start time entry
