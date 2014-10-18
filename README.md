@@ -22,6 +22,8 @@ Downloads
 Agenda is a stand-alone executable (requires .NET Framework 4.5)
 You can download either the [EXE](https://github.com/BellaCode/Agenda/blob/master/latest/BellaCodeAgenda.exe?raw=true) or the [ZIP](https://github.com/BellaCode/Agenda/blob/master/latest/BellaCodeAgenda.zip?raw=true).
 
+*Important*:Be sure to unblock your downloaded  EXE or ZIP before running it.
+
 Features
 ------
 - Smart start time entry
