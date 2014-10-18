@@ -40,15 +40,20 @@
   <ItemGroup>
     <Reference Include="BellaCode.Mvvm">
       <HintPath>packages\BellaCode.Mvvm.1.0.6\lib\net45\BellaCode.Mvvm.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Expression.Drawing" />
+    <Reference Include="Microsoft.Expression.Drawing">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\BellaCode.Mvvm.1.0.6\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\BellaCode.Mvvm.1.0.6\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -167,6 +172,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="App.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Embedded\BellaCode.Mvvm.dll" />
+    <EmbeddedResource Include="Embedded\Microsoft.Expression.Drawing.dll" />
+    <EmbeddedResource Include="Embedded\Microsoft.Expression.Interactions.dll" />
+    <EmbeddedResource Include="Embedded\System.Windows.Interactivity.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
