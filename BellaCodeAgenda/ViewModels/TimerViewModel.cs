@@ -357,6 +357,8 @@ namespace BellaCodeAgenda.ViewModels
                 this.CurrentItemElapsedTime = TimeSpan.Zero;
                 this.CurrentItemRemainingTime = TimeSpan.Zero;
             }
+
+            Debug.WriteLine("CurrentItemRemainingTime: " + this.CurrentItemRemainingTime.ToString());
         }        
 
         private void UpdateStatus()

@@ -25,20 +25,28 @@
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="TestStoryboard">
                             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="border">
-                                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF035481"/>
-                                <EasingColorKeyFrame KeyTime="0:0:2" Value="Black"/>
+                                <EasingColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
+                                <EasingColorKeyFrame KeyTime="0:0:0.4" Value="Black"/>
+								<EasingColorKeyFrame KeyTime="0:0:0.8" Value="White"/>
+								<EasingColorKeyFrame KeyTime="0:0:1.5" Value="Black"/>
                             </ColorAnimationUsingKeyFrames>
                             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Storyboard.TargetName="border">
-                                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF00A2FF"/>
-                                <EasingColorKeyFrame KeyTime="0:0:2" Value="#FF404040"/>
+								<EasingColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
+                                <EasingColorKeyFrame KeyTime="0:0:0.4" Value="#FF404040"/>
+								<EasingColorKeyFrame KeyTime="0:0:0.8" Value="White"/>								
+                                <EasingColorKeyFrame KeyTime="0:0:1.5" Value="#FF404040"/>                           
                             </ColorAnimationUsingKeyFrames>
                             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="border">
-                                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF00A2FF"/>
-                                <EasingColorKeyFrame KeyTime="0:0:2" Value="Black"/>
+								<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FF00A2FF"/>
+                                <EasingColorKeyFrame KeyTime="0:0:0.4" Value="Black"/>
+								<EasingColorKeyFrame KeyTime="0:0:0.8" Value="#FF00A2FF"/>														                           
+                                <EasingColorKeyFrame KeyTime="0:0:1.5" Value="Black"/>
                             </ColorAnimationUsingKeyFrames>
                             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock">
-                                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF99DAFF"/>
-                                <EasingColorKeyFrame KeyTime="0:0:2" Value="White"/>
+								<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FF00A2FF"/>
+                                <EasingColorKeyFrame KeyTime="0:0:0.4" Value="White"/>
+								<EasingColorKeyFrame KeyTime="0:0:0.8" Value="#FF00A2FF"/>														                           
+                                <EasingColorKeyFrame KeyTime="0:0:1.5" Value="White"/>                              
                             </ColorAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
@@ -47,25 +55,29 @@
                             <Grid.Resources>
                                 <Storyboard x:Key="FlashAgendaItem">
                                     <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="border">
-                                        <EasingColorKeyFrame KeyTime="0:0:0.5" Value="#FF035481"/>
-                                        <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF035481"/>
-                                        <EasingColorKeyFrame KeyTime="0:0:2" Value="Black"/>
-                                    </ColorAnimationUsingKeyFrames>
-                                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Storyboard.TargetName="border">
-                                        <EasingColorKeyFrame KeyTime="0:0:0.5" Value="#FF00A2FF"/>
-                                        <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF00A2FF"/>
-                                        <EasingColorKeyFrame KeyTime="0:0:2" Value="#FF404040"/>
-                                    </ColorAnimationUsingKeyFrames>
-                                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="border">
-                                        <EasingColorKeyFrame KeyTime="0:0:0.5" Value="#FF00A2FF"/>
-                                        <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF00A2FF"/>
-                                        <EasingColorKeyFrame KeyTime="0:0:2" Value="Black"/>
-                                    </ColorAnimationUsingKeyFrames>
-                                    <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock">
-                                        <EasingColorKeyFrame KeyTime="0:0:0.5" Value="#FF99DAFF"/>
-                                        <EasingColorKeyFrame KeyTime="0:0:1" Value="#FF99DAFF"/>
-                                        <EasingColorKeyFrame KeyTime="0:0:2" Value="White"/>
-                                    </ColorAnimationUsingKeyFrames>
+                                <EasingColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
+                                <EasingColorKeyFrame KeyTime="0:0:0.4" Value="Black"/>
+								<EasingColorKeyFrame KeyTime="0:0:0.8" Value="White"/>
+								<EasingColorKeyFrame KeyTime="0:0:1.5" Value="Black"/>
+                            </ColorAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Storyboard.TargetName="border">
+								<EasingColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
+                                <EasingColorKeyFrame KeyTime="0:0:0.4" Value="#FF404040"/>
+								<EasingColorKeyFrame KeyTime="0:0:0.8" Value="White"/>								
+                                <EasingColorKeyFrame KeyTime="0:0:1.5" Value="#FF404040"/>                           
+                            </ColorAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="border">
+								<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FF00A2FF"/>
+                                <EasingColorKeyFrame KeyTime="0:0:0.4" Value="Black"/>
+								<EasingColorKeyFrame KeyTime="0:0:0.8" Value="#FF00A2FF"/>														                           
+                                <EasingColorKeyFrame KeyTime="0:0:1.5" Value="Black"/>
+                            </ColorAnimationUsingKeyFrames>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="textBlock">
+								<EasingColorKeyFrame KeyTime="0:0:0.2" Value="#FF00A2FF"/>
+                                <EasingColorKeyFrame KeyTime="0:0:0.4" Value="White"/>
+								<EasingColorKeyFrame KeyTime="0:0:0.8" Value="#FF00A2FF"/>														                           
+                                <EasingColorKeyFrame KeyTime="0:0:1.5" Value="White"/>                              
+                            </ColorAnimationUsingKeyFrames>
                                 </Storyboard>
                             </Grid.Resources>
                             <i:Interaction.Triggers>
@@ -88,7 +100,7 @@
                                     <agenda_behaviors:IsInteractiveBehavior IsInteractive="{Binding IsInteractive, Mode=OneWayToSource}" />
                                     <agenda_behaviors:MouseDragWindowBehavior />
                                 </i:Interaction.Behaviors>
-                                <Border CornerRadius="4" BorderThickness="3" RenderTransformOrigin="0.5,0.5" Margin="7,0,29,4" d:IsHidden="True">
+                                <Border CornerRadius="4" BorderThickness="3" RenderTransformOrigin="0.5,0.5" Margin="7,0,29,4">
                                     <Border.BorderBrush>
                                         <LinearGradientBrush EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,0">
                                             <GradientStop Color="#FF035481" Offset="1"/>
@@ -134,7 +146,7 @@
                                 </Border>
                                 <Grid Margin="4,0,0,0">
                                     <Grid Visibility="{Binding Status, ConverterParameter={x:Static agenda_view_models:TimerStatus.InProgress}, Converter={StaticResource VisibleCollapsedEnumConverter}, Mode=OneWay}" >
-                                        <Border x:Name="border" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" MinHeight="30" d:IsHidden="True">
+                                        <Border x:Name="border" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" MinHeight="30">
                                             <Border.Background>
                                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                                     <GradientStop Color="Black" Offset="1"/>
@@ -155,18 +167,18 @@
                                                 <StackPanel>
                                                     <WrapPanel>
                                                         <TextBlock Text="{Binding RemainingTime, Mode=OneWay, Converter={StaticResource RemainingTimeSpanDisplayConverter}}" FontFamily="Segoe UI" FontSize="16pt" Foreground="#FF035481" VerticalAlignment="Bottom"/>
-                                                        <TextBlock Text=" remaining for meeting" VerticalAlignment="Bottom" Margin="0,0,0,2" />                                                        
+                                                        <TextBlock Text=" remaining for meeting" VerticalAlignment="Bottom" Margin="0,0,0,2" />
                                                     </WrapPanel>
                                                     <WrapPanel Visibility="{Binding CurrentAgendaItem, Mode=OneWay, Converter={StaticResource VisibleCollapsedObjectRefConverter}}">
                                                         <TextBlock Text="{Binding CurrentItemRemainingTime, Mode=OneWay, Converter={StaticResource RemainingTimeSpanDisplayConverter}}" FontFamily="Segoe UI" FontSize="16pt" Foreground="#FF035481"  VerticalAlignment="Bottom"/>
-                                                        <TextBlock Text=" remaining for current agenda item" VerticalAlignment="Bottom" Margin="0,0,0,2" />                                                 
+                                                        <TextBlock Text=" remaining for current agenda item" VerticalAlignment="Bottom" Margin="0,0,0,2" />
                                                     </WrapPanel>
                                                     <WrapPanel>
                                                         <TextBlock Text="{Binding CompletedAgendaItemCount, Mode=OneWay}" FontFamily="Segoe UI" FontSize="16pt" Foreground="#FF035481"  VerticalAlignment="Bottom"/>
                                                         <TextBlock Text=" of " VerticalAlignment="Bottom" Margin="0,0,0,2" />
                                                         <TextBlock Text="{Binding Meeting.AgendaItems.Count, Mode=OneWay}" FontFamily="Segoe UI" FontSize="16pt" Foreground="#FF035481"  VerticalAlignment="Bottom"/>
                                                         <TextBlock Text=" agenda items completed" VerticalAlignment="Bottom" Margin="0,2" />
-                                                    </WrapPanel>                                                    
+                                                    </WrapPanel>
                                                 </StackPanel>
                                             </Grid.ToolTip>
                                             <Ellipse HorizontalAlignment="Left" Height="60" Stroke="Black" VerticalAlignment="Top" Width="60">

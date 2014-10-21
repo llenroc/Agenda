@@ -46,8 +46,17 @@ namespace BellaCodeAgenda.Converters
 
                 int hours = (int)Math.Truncate(timeSpan.TotalHours);
                 int minutes = timeSpan.Minutes;
+                int seconds = timeSpan.Seconds;
 
-                var text = string.Format("{0} {1}", minutes, minutes == 1 ? this.OneMinuteSuffix : this.MinutesSuffix);
+                string text;
+                if (minutes < 1 && seconds > 0)
+                {
+                    text = "< 1 " + this.OneMinuteSuffix;
+                }
+                else
+                {
+                    text = string.Format("{0} {1}", minutes, minutes == 1 ? this.OneMinuteSuffix : this.MinutesSuffix);
+                }
 
                 if (hours > 0)
                 {
